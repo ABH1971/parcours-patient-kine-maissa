@@ -26,11 +26,29 @@ window.QUESTIONNAIRES = {
     { id: 'cheville_gonflement', label: "Gonflement actuel ?", type: 'oui-non' },
     { id: 'cheville_appui', label: "Douleur quand vous prenez appui complet dessus ?", type: 'oui-non' },
   ],
+  cervicalgie: [
+    { id: 'cervicalgie_irradiation', label: "La douleur irradie-t-elle dans le bras ou l'épaule ?", type: 'oui-non' },
+    { id: 'cervicalgie_maux_tete', label: "Maux de tête associés ?", type: 'oui-non' },
+    { id: 'cervicalgie_ecran', label: "Travail prolongé sur écran ou position figée de la tête ?", type: 'oui-non' },
+    { id: 'cervicalgie_fourmillements', label: "Fourmillements ou engourdissement dans les bras ou les mains ?", type: 'oui-non' },
+  ],
   'post-operatoire': [
     { id: 'postop_date', label: "Date de l'opération", type: 'texte' },
     { id: 'postop_intervention', label: "Type d'intervention (si vous le savez)", type: 'texte' },
     { id: 'postop_chirurgien', label: "Chirurgien / clinique", type: 'texte' },
     { id: 'postop_consignes', label: "Consignes particulières données par le chirurgien", type: 'texte' },
+  ],
+  sport: [
+    { id: 'sport_discipline', label: "Quel sport pratiquez-vous ?", type: 'texte' },
+    { id: 'sport_niveau', label: "À quel niveau (loisir, compétition...) ?", type: 'texte' },
+    { id: 'sport_moment_apparition', label: "La douleur est-elle apparue pendant un entraînement ou une compétition précise ?", type: 'oui-non' },
+    { id: 'sport_arret', label: "Avez-vous dû arrêter le sport à cause de la douleur ?", type: 'oui-non' },
+  ],
+  neurologie: [
+    { id: 'neuro_faiblesse', label: "Sensation de faiblesse musculaire ?", type: 'oui-non' },
+    { id: 'neuro_equilibre', label: "Troubles de l'équilibre ou de la coordination ?", type: 'oui-non' },
+    { id: 'neuro_sensibilite', label: "Perte de sensibilité quelque part ?", type: 'oui-non' },
+    { id: 'neuro_diagnostic', label: "Diagnostic neurologique déjà posé (si connu) ?", type: 'texte' },
   ],
   autre: [],
 };

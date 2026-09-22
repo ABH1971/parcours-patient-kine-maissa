@@ -10,3 +10,5 @@ services:
         sync: false
       - key: SEED_DEMO
         value: "true"
+      - key: DOCTOLIB_SYNC_DIR
+        value: ""

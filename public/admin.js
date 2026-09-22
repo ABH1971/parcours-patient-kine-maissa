@@ -138,9 +138,32 @@
     }
 
     const s = p.synthese;
-    document.getElementById('fiche-resume').textContent = s.resume;
+    document.getElementById('fiche-resume').textContent = s.resumeProse || s.resume;
+    document.getElementById('lien-pdf').href = `/api/admin/patients/${token}/bilan.pdf`;
+    document.getElementById('lien-pdf').onclick = async (e) => {
+      e.preventDefault();
+      const reponse = await appelApi(`/api/admin/patients/${token}/bilan.pdf`);
+      const blob = await reponse.blob();
+      const urlBlob = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = urlBlob;
+      a.download = `bilan-${token}.pdf`;
+      a.click();
+    };
     document.getElementById('f-motif').textContent = s.motif || '—';
+    document.getElementById('f-localisation').textContent = s.zoneDouloureuse || '—';
     document.getElementById('f-medecin').textContent = s.medecinPrescripteur || '—';
+    document.getElementById('f-anciennete').textContent = s.ancienneteDouleur || '—';
+    document.getElementById('f-circonstances').textContent = s.circonstancesDetail
+      ? `${s.circonstancesApparition || ''} — ${s.circonstancesDetail}`
+      : (s.circonstancesApparition || '—');
+    document.getElementById('f-eva').textContent =
+      s.douleurRepos !== '' || s.douleurMouvement !== ''
+        ? `${s.douleurRepos ?? '—'}/10 repos, ${s.douleurMouvement ?? '—'}/10 mouvement`
+        : '—';
+    document.getElementById('f-nocturne').textContent = s.douleurNocturne ? 'Oui' : 'Non';
+    document.getElementById('f-profession').textContent = s.activiteProfessionnelle || '—';
+    document.getElementById('f-sport').textContent = s.sportPratique || '—';
     document.getElementById('f-antecedents').textContent = s.antecedents || '—';
     document.getElementById('f-traitements').textContent = s.traitementsEnCours || '—';
     document.getElementById('f-operations').textContent = s.operationsAnterieures || '—';

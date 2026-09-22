@@ -7,6 +7,7 @@ const multer = require('multer');
 const db = require('./db');
 const { genererSynthese } = require('./synthese');
 const { seedDemoData } = require('./seed-demo');
+const { genererPdfBilan, nomFichierBilan } = require('./pdf-bilan');
 
 if (process.env.SEED_DEMO !== 'false') {
   seedDemoData(db);
@@ -14,6 +15,9 @@ if (process.env.SEED_DEMO !== 'false') {
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'change-moi';
 const PORT = process.env.PORT || 3000;
+// Dossier local synchronise par le client de bureau Doctolib Documents (optionnel).
+// Si defini et existant, le bilan PDF y est aussi depose automatiquement a la soumission.
+const DOCTOLIB_SYNC_DIR = process.env.DOCTOLIB_SYNC_DIR || '';
 
 const app = express();
 app.use(express.json({ limit: '2mb' }));
@@ -114,6 +118,18 @@ app.get('/api/admin/patients/:token', requireAdmin, (req, res) => {
   });
 });
 
+// Bilan PDF pret a etre depose dans le dossier patient Doctolib (import manuel ou dossier synchronise)
+app.get('/api/admin/patients/:token/bilan.pdf', requireAdmin, (req, res) => {
+  const patient = getPatientOr404(req, res);
+  if (!patient) return;
+  if (!patient.synthese) return res.status(400).json({ erreur: 'Formulaire pas encore rempli' });
+
+  const fiche = JSON.parse(patient.synthese);
+  res.setHeader('Content-Type', 'application/pdf');
+  res.setHeader('Content-Disposition', `attachment; filename="${nomFichierBilan(fiche)}"`);
+  genererPdfBilan(fiche, res);
+});
+
 app.delete('/api/admin/patients/:token', requireAdmin, (req, res) => {
   const patient = getPatientOr404(req, res);
   if (!patient) return;
@@ -154,8 +170,28 @@ app.post('/api/patient/:token/submit', (req, res) => {
     "UPDATE patients SET form_data = ?, synthese = ?, status = 'rempli', submitted_at = datetime('now') WHERE token = ?"
   ).run(JSON.stringify(formData), JSON.stringify(fiche), patient.token);
 
+  deposerBilanSiConfigure(fiche);
+
   res.json({ ok: true });
 });
+
+// Depose une copie du bilan PDF dans le dossier synchronise Doctolib Documents, si configure.
+// Best-effort : une erreur ici n'empeche jamais la prise en compte du formulaire patient.
+function deposerBilanSiConfigure(fiche) {
+  if (!DOCTOLIB_SYNC_DIR) return;
+  if (!fs.existsSync(DOCTOLIB_SYNC_DIR)) {
+    console.warn(`DOCTOLIB_SYNC_DIR configure (${DOCTOLIB_SYNC_DIR}) mais introuvable, bilan non depose.`);
+    return;
+  }
+  try {
+    const cheminFichier = path.join(DOCTOLIB_SYNC_DIR, nomFichierBilan(fiche));
+    const flux = fs.createWriteStream(cheminFichier);
+    genererPdfBilan(fiche, flux);
+    flux.on('finish', () => console.log(`Bilan depose pour Doctolib Documents : ${cheminFichier}`));
+  } catch (err) {
+    console.warn('Echec du depot automatique vers Doctolib Documents :', err.message);
+  }
+}
 
 app.post('/api/patient/:token/upload', (req, res, next) => {
   const patient = getPatientOr404(req, res);

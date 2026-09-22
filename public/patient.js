@@ -9,8 +9,10 @@
   const btnSuivant = document.getElementById('btn-suivant');
   const btnEnvoyer = document.getElementById('btn-envoyer');
   const erreurBox = document.getElementById('erreur');
-  const inputIntensite = document.getElementById('intensiteDouleur');
-  const valeurIntensite = document.getElementById('valeur-intensite');
+  const inputRepos = document.getElementById('douleurRepos');
+  const valeurRepos = document.getElementById('valeur-repos');
+  const inputMouvement = document.getElementById('douleurMouvement');
+  const valeurMouvement = document.getElementById('valeur-mouvement');
   const selectCategorie = document.getElementById('categorieMotif');
   const questionsSpecifiquesDiv = document.getElementById('questions-specifiques');
   const etapeSpecifique = document.getElementById('etape-specifique');
@@ -71,8 +73,11 @@
     }
   });
 
-  inputIntensite.addEventListener('input', () => {
-    valeurIntensite.textContent = inputIntensite.value;
+  inputRepos.addEventListener('input', () => {
+    valeurRepos.textContent = inputRepos.value;
+  });
+  inputMouvement.addEventListener('input', () => {
+    valeurMouvement.textContent = inputMouvement.value;
   });
 
   function construireQuestionsSpecifiques() {
@@ -158,11 +163,9 @@
 
     const donnees = {
       identite: {
+        civilite: document.getElementById('civilite').value,
         prenom: document.getElementById('prenom').value,
         nom: document.getElementById('nom').value,
-        dateNaissance: document.getElementById('dateNaissance').value,
-        telephone: document.getElementById('telephone').value,
-        email: document.getElementById('email').value,
       },
       categorieMotif: selectCategorie.value,
       motif: document.getElementById('motif').value,
@@ -172,9 +175,14 @@
       operationsAnterieures: document.getElementById('operationsAnterieures').value,
       zoneDouloureuse: document.getElementById('zoneDouloureuse').value,
       ancienneteDouleur: document.getElementById('ancienneteDouleur').value,
-      intensiteDouleur: Number(inputIntensite.value),
+      circonstancesApparition: document.getElementById('circonstancesApparition').value,
+      circonstancesDetail: document.getElementById('circonstancesDetail').value,
+      douleurRepos: Number(inputRepos.value),
+      douleurMouvement: Number(inputMouvement.value),
       douleurNocturne: document.querySelector('input[name="douleurNocturne"]:checked')?.value === 'oui',
       limitationsQuotidien: document.getElementById('limitationsQuotidien').value,
+      activiteProfessionnelle: document.getElementById('activiteProfessionnelle').value,
+      sportPratique: document.getElementById('sportPratique').value,
       objectifs: document.getElementById('objectifs').value,
       questionnaireSpecifique: collecterQuestionsSpecifiques(),
     };

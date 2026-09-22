@@ -8,8 +8,8 @@
 </head>
 <body>
 <header class="entete">
-  <h1>Parcours patient — espace cabinet</h1>
-  <p>Générez un lien avant chaque rendez-vous, consultez la fiche à l'arrivée du patient.</p>
+  <h1>Assistant de préparation de consultation — espace cabinet</h1>
+  <p>Complément à Doctolib : générez un lien après la prise de rendez-vous, consultez la fiche et le PDF de bilan avant la séance.</p>
 </header>
 
 <div class="conteneur-large">
@@ -76,11 +76,22 @@
       </div>
 
       <div id="fiche-contenu" class="masque">
-        <div class="fiche-resume" id="fiche-resume"></div>
+        <div class="fiche-resume" id="fiche-resume" style="white-space: pre-line;"></div>
 
-        <dl class="grille-fiche">
+        <div class="barre-actions" style="justify-content: flex-start; margin-top: 0;">
+          <a class="bouton" id="lien-pdf" href="#" target="_blank">Télécharger le bilan PDF (pour Doctolib)</a>
+        </div>
+
+        <dl class="grille-fiche" style="margin-top:16px;">
           <div class="item"><dt>Motif</dt><dd id="f-motif"></dd></div>
+          <div class="item"><dt>Localisation</dt><dd id="f-localisation"></dd></div>
           <div class="item"><dt>Médecin prescripteur</dt><dd id="f-medecin"></dd></div>
+          <div class="item"><dt>Depuis quand</dt><dd id="f-anciennete"></dd></div>
+          <div class="item"><dt>Circonstances</dt><dd id="f-circonstances"></dd></div>
+          <div class="item"><dt>EVA repos / mouvement</dt><dd id="f-eva"></dd></div>
+          <div class="item"><dt>Douleur nocturne</dt><dd id="f-nocturne"></dd></div>
+          <div class="item"><dt>Activité professionnelle</dt><dd id="f-profession"></dd></div>
+          <div class="item"><dt>Sport pratiqué</dt><dd id="f-sport"></dd></div>
           <div class="item"><dt>Antécédents</dt><dd id="f-antecedents"></dd></div>
           <div class="item"><dt>Traitements en cours</dt><dd id="f-traitements"></dd></div>
           <div class="item"><dt>Opérations antérieures</dt><dd id="f-operations"></dd></div>

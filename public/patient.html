@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Avant votre séance de kiné</title>
+<title>Préparation de votre séance de kiné</title>
 <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 <header class="entete">
-  <h1>Avant votre première séance</h1>
-  <p>Quelques minutes suffisent — ça permet au kiné de préparer votre venue.</p>
+  <h1>Avant votre séance de kiné</h1>
+  <p>Votre rendez-vous est déjà pris. Ces quelques questions permettent à votre kiné de préparer votre bilan.</p>
 </header>
 
 <div class="conteneur">
@@ -25,19 +25,19 @@
   <form id="form-patient" class="masque">
     <div class="progression" id="progression"></div>
 
-    <!-- Étape 1 : identité -->
+    <!-- Étape 1 : identité légère (Doctolib porte déjà l'identité complète) -->
     <section class="carte etape" data-etape="1">
-      <h2 class="titre-etape">Vos coordonnées</h2>
-      <label class="premier">Prénom</label>
-      <input type="text" id="prenom" required>
+      <h2 class="titre-etape">Pour commencer</h2>
+      <p class="aide">Juste de quoi personnaliser votre bilan. Le reste de votre dossier (coordonnées, mutuelle...) reste géré dans Doctolib.</p>
+      <label class="premier">Civilité</label>
+      <select id="civilite">
+        <option value="Mme">Madame</option>
+        <option value="M.">Monsieur</option>
+      </select>
       <label>Nom</label>
       <input type="text" id="nom" required>
-      <label>Date de naissance</label>
-      <input type="date" id="dateNaissance" required>
-      <label>Téléphone</label>
-      <input type="tel" id="telephone">
-      <label>Email</label>
-      <input type="email" id="email">
+      <label>Prénom</label>
+      <input type="text" id="prenom" required>
     </section>
 
     <!-- Étape 2 : motif -->
@@ -45,43 +45,57 @@
       <h2 class="titre-etape">Motif de consultation</h2>
       <label class="premier">Zone concernée</label>
       <select id="categorieMotif">
-        <option value="epaule">Épaule</option>
         <option value="genou">Genou</option>
+        <option value="epaule">Épaule</option>
         <option value="lombalgie">Bas du dos / lombalgie</option>
+        <option value="cervicalgie">Cervicales / nuque</option>
         <option value="cheville">Cheville / pied</option>
         <option value="post-operatoire">Suite d'opération</option>
+        <option value="sport">Blessure sportive</option>
+        <option value="neurologie">Neurologique</option>
         <option value="autre">Autre</option>
       </select>
       <label>Décrivez en quelques mots</label>
-      <textarea id="motif" placeholder="Ex : douleur à l'épaule droite qui gêne pour lever le bras"></textarea>
+      <textarea id="motif" placeholder="Ex : douleur au genou droit qui gêne pour monter les escaliers"></textarea>
+      <label>Localisation précise de la douleur</label>
+      <input type="text" id="zoneDouloureuse" placeholder="Ex : genou droit, face interne">
       <label>Médecin prescripteur (si ordonnance)</label>
       <input type="text" id="medecinPrescripteur" placeholder="Nom du médecin">
     </section>
 
-    <!-- Étape 3 : antécédents -->
+    <!-- Étape 3 : histoire de la douleur -->
     <section class="carte etape masque" data-etape="3">
-      <h2 class="titre-etape">Antécédents</h2>
-      <label class="premier">Antécédents médicaux utiles</label>
-      <textarea id="antecedents" placeholder="Ex : diabète, arthrose, opération il y a 2 ans..."></textarea>
-      <label>Traitements en cours</label>
-      <textarea id="traitementsEnCours" placeholder="Médicaments pris actuellement"></textarea>
-      <label>Opérations antérieures liées à ce motif</label>
-      <textarea id="operationsAnterieures"></textarea>
+      <h2 class="titre-etape">Depuis quand, et comment</h2>
+      <label class="premier">Depuis quand ?</label>
+      <input type="text" id="ancienneteDouleur" placeholder="Ex : 3 mois, 2 semaines...">
+      <label>Comment la douleur est-elle apparue ?</label>
+      <select id="circonstancesApparition">
+        <option value="progressive">Progressivement, sans événement particulier</option>
+        <option value="effort">Suite à un effort inhabituel</option>
+        <option value="traumatisme">Suite à un choc ou une chute</option>
+        <option value="operation">Suite à une opération</option>
+        <option value="autre">Autre</option>
+      </select>
+      <label>Précisions si besoin</label>
+      <textarea id="circonstancesDetail" placeholder="Ex : en descendant les escaliers, pendant un match..."></textarea>
     </section>
 
-    <!-- Étape 4 : douleur -->
+    <!-- Étape 4 : intensité de la douleur -->
     <section class="carte etape masque" data-etape="4">
-      <h2 class="titre-etape">La douleur</h2>
-      <label class="premier">Où avez-vous mal exactement ?</label>
-      <input type="text" id="zoneDouloureuse" placeholder="Ex : épaule droite, face avant">
-      <label>Depuis quand ?</label>
-      <input type="text" id="ancienneteDouleur" placeholder="Ex : 3 mois, 2 semaines...">
-      <label>Intensité de la douleur en ce moment</label>
+      <h2 class="titre-etape">Intensité de la douleur</h2>
+      <label class="premier">Au repos</label>
       <div class="echelle-douleur">
         <span>0</span>
-        <input type="range" id="intensiteDouleur" min="0" max="10" value="5">
+        <input type="range" id="douleurRepos" min="0" max="10" value="2">
         <span>10</span>
-        <span class="valeur-echelle" id="valeur-intensite">5</span>
+        <span class="valeur-echelle" id="valeur-repos">2</span>
+      </div>
+      <label>En mouvement / à l'effort</label>
+      <div class="echelle-douleur">
+        <span>0</span>
+        <input type="range" id="douleurMouvement" min="0" max="10" value="6">
+        <span>10</span>
+        <span class="valeur-echelle" id="valeur-mouvement">6</span>
       </div>
       <label>Douleur la nuit ?</label>
       <div class="ligne-oui-non">
@@ -89,26 +103,41 @@
         <label><input type="radio" name="douleurNocturne" value="non" checked><span>Non</span></label>
       </div>
       <label>Ce que ça vous empêche de faire au quotidien</label>
-      <textarea id="limitationsQuotidien" placeholder="Ex : difficile de m'habiller, de porter les courses..."></textarea>
+      <textarea id="limitationsQuotidien" placeholder="Ex : difficile de monter les escaliers, de m'accroupir..."></textarea>
     </section>
 
-    <!-- Étape 5 : questionnaire spécifique -->
-    <section class="carte etape masque" data-etape="5" id="etape-specifique">
+    <!-- Étape 5 : contexte de vie -->
+    <section class="carte etape masque" data-etape="5">
+      <h2 class="titre-etape">Votre quotidien</h2>
+      <label class="premier">Activité professionnelle</label>
+      <input type="text" id="activiteProfessionnelle" placeholder="Ex : travail sur ordinateur, métier physique, debout toute la journée...">
+      <label>Sport pratiqué (lequel, à quelle fréquence)</label>
+      <input type="text" id="sportPratique" placeholder="Ex : tennis 2 fois/semaine, aucun sport actuellement...">
+      <label>Antécédents médicaux utiles</label>
+      <textarea id="antecedents" placeholder="Ex : diabète, arthrose, opération il y a 2 ans..."></textarea>
+      <label>Traitements en cours</label>
+      <textarea id="traitementsEnCours" placeholder="Médicaments pris actuellement"></textarea>
+      <label>Opérations antérieures liées à ce motif</label>
+      <textarea id="operationsAnterieures"></textarea>
+    </section>
+
+    <!-- Étape 6 : questionnaire spécifique -->
+    <section class="carte etape masque" data-etape="6" id="etape-specifique">
       <h2 class="titre-etape">Quelques précisions</h2>
       <div id="questions-specifiques"></div>
     </section>
 
-    <!-- Étape 6 : objectifs -->
-    <section class="carte etape masque" data-etape="6">
+    <!-- Étape 7 : objectifs -->
+    <section class="carte etape masque" data-etape="7">
       <h2 class="titre-etape">Vos objectifs</h2>
       <label class="premier">Qu'aimeriez-vous pouvoir refaire ?</label>
       <textarea id="objectifs" placeholder="Ex : reprendre le sport, ne plus avoir mal la nuit, remarcher normalement..."></textarea>
     </section>
 
-    <!-- Étape 7 : documents -->
-    <section class="carte etape masque" data-etape="7">
+    <!-- Étape 8 : documents -->
+    <section class="carte etape masque" data-etape="8">
       <h2 class="titre-etape">Vos documents</h2>
-      <p class="aide">Ordonnance, radio, IRM, compte rendu médical. Vous pouvez les prendre en photo directement.</p>
+      <p class="aide">Si vous ne l'avez pas déjà transmis via Doctolib : ordonnance, radio, IRM, compte rendu médical. Vous pouvez les prendre en photo directement.</p>
       <label class="zone-upload" for="documents">
         📎 Toucher ici pour ajouter des photos ou PDF
         <input type="file" id="documents" accept="image/*,application/pdf" multiple capture="environment">
