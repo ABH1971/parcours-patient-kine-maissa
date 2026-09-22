@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cabinet — dossiers patients</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="entete">
+  <h1>Parcours patient — espace cabinet</h1>
+  <p>Générez un lien avant chaque rendez-vous, consultez la fiche à l'arrivée du patient.</p>
+</header>
+
+<div class="conteneur-large">
+
+  <!-- Connexion -->
+  <div class="carte" id="zone-login">
+    <h2 class="titre-etape">Connexion</h2>
+    <label class="premier">Mot de passe</label>
+    <input type="password" id="mot-de-passe">
+    <div class="barre-actions">
+      <span></span>
+      <button class="bouton" id="btn-connexion">Se connecter</button>
+    </div>
+    <p class="erreur masque" id="erreur-login"></p>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="zone-dashboard" class="masque">
+    <div class="carte">
+      <h2 class="titre-etape">Nouveau patient</h2>
+      <label class="premier">Nom du patient (repère interne)</label>
+      <input type="text" id="nouveau-label" placeholder="Ex : Dupont Marie">
+      <label>Date du rendez-vous</label>
+      <input type="date" id="nouveau-rdv">
+      <div class="barre-actions">
+        <span></span>
+        <button class="bouton" id="btn-creer">Générer le lien</button>
+      </div>
+      <div id="resultat-creation" class="masque">
+        <p class="aide">Copiez ce texte dans votre SMS habituel :</p>
+        <div class="texte-sms" id="texte-sms"></div>
+        <div class="champ-lien">
+          <input type="text" id="lien-genere" readonly>
+          <button class="bouton secondaire" id="btn-copier">Copier</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="carte">
+      <h2 class="titre-etape">Dossiers patients</h2>
+      <table id="table-patients">
+        <thead>
+          <tr><th>Patient</th><th>RDV</th><th>Statut</th><th>Créé le</th></tr>
+        </thead>
+        <tbody id="corps-table"></tbody>
+      </table>
+      <p class="aide" id="aucun-patient">Aucun dossier pour l'instant.</p>
+    </div>
+  </div>
+
+  <!-- Fiche patient -->
+  <div id="zone-fiche" class="masque">
+    <button class="bouton secondaire" id="btn-retour">← Retour aux dossiers</button>
+
+    <div class="carte" style="margin-top:14px;">
+      <h2 class="titre-etape" id="fiche-titre">Fiche patient</h2>
+
+      <div id="fiche-en-attente" class="masque">
+        <p>Ce patient n'a pas encore rempli le formulaire.</p>
+        <div class="champ-lien">
+          <input type="text" id="fiche-lien" readonly>
+          <button class="bouton secondaire" id="fiche-btn-copier">Copier le lien</button>
+        </div>
+      </div>
+
+      <div id="fiche-contenu" class="masque">
+        <div class="fiche-resume" id="fiche-resume"></div>
+
+        <dl class="grille-fiche">
+          <div class="item"><dt>Motif</dt><dd id="f-motif"></dd></div>
+          <div class="item"><dt>Médecin prescripteur</dt><dd id="f-medecin"></dd></div>
+          <div class="item"><dt>Antécédents</dt><dd id="f-antecedents"></dd></div>
+          <div class="item"><dt>Traitements en cours</dt><dd id="f-traitements"></dd></div>
+          <div class="item"><dt>Opérations antérieures</dt><dd id="f-operations"></dd></div>
+          <div class="item"><dt>Objectifs</dt><dd id="f-objectifs"></dd></div>
+        </dl>
+
+        <h3>Questionnaire spécifique</h3>
+        <ul id="f-questionnaire"></ul>
+
+        <h3>Documents joints</h3>
+        <ul id="f-documents"></ul>
+      </div>
+    </div>
+
+    <button class="bouton danger" id="btn-supprimer">Supprimer ce dossier</button>
+  </div>
+</div>
+
+<script src="/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: parcours-patient-kine-demo
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SEED_DEMO
+        value: "true"
